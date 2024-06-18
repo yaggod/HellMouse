@@ -4,7 +4,7 @@
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello, World!");
+			new HellMouse(100, 500).Begin();
 		}
 	}
 }
