@@ -27,7 +27,7 @@
 		private void Workflow()
 		{
 			Random random = new();
-			for (int i = 0; i < 5; i++)
+			while(true)
 			{
 				try
 				{
