@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HellMouse
+﻿namespace HellMouse
 {
 	internal class HellMouse
 	{
@@ -28,30 +22,33 @@ namespace HellMouse
 
 		public void Stop()
 		{
-
 		}
 
 		private void Workflow()
 		{
 			Random random = new();
-			for(int i = 0; i < 5; i++)
-			//while(true)
+			for (int i = 0; i < 5; i++)
 			{
-				PerformAction();
-				Task.Delay(random.Next(MinDelay, MaxDelay)).Wait();
-            }
-        }
+				try
+				{
+					PerformAction();
+					Task.Delay(random.Next(MinDelay, MaxDelay)).Wait();
+				}
+				catch
+				{
+				}
+			}
+		}
 
 		private static void PerformAction()
 		{
 			Random random = new();
 			MouseEvent mouseEvent = EnumExtension<MouseEvent>.GetRandomItem();
-			int x = random.Next(0, 1920);
-			int y = random.Next(0, 1080);
-
-			Console.WriteLine($"{mouseEvent} {x} {y}");
+			Rectangle? screenBounds = Screen.PrimaryScreen?.Bounds;
+			int x = random.Next(0, screenBounds?.Width ?? 0);
+			int y = random.Next(0, screenBounds?.Height ?? 0);
+			WinApi.mouse_event(mouseEvent);
 			WinApi.SetCursorPos(x, y);
-            WinApi.mouse_event((uint) mouseEvent);
 		}
 	}
 }
