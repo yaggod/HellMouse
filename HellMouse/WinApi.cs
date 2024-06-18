@@ -8,8 +8,9 @@ namespace HellMouse
 		public static extern long SetCursorPos(int x, int y);
 
 		[DllImport("user32.dll")]
-		public static extern void mouse_event(uint dwFlags, uint dx = 0, uint dy = 0, uint cButtons = 0, uint dwExtraInfo = 0);
-
+		public static extern void mouse_event(MouseEvent dwFlags);
+		// original signature looks like this: 
+		//public static extern void mouse_event(uint dwFlags, uint dx = 0, uint dy = 0, uint cButtons = 0, uint dwExtraInfo = 0);
 
 	}
 
