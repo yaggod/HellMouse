@@ -8,13 +8,12 @@ namespace HellMouse
 		public static extern long SetCursorPos(int x, int y);
 
 		[DllImport("user32.dll")]
-		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons = 0, uint dwExtraInfo =0);
+		public static extern void mouse_event(uint dwFlags, uint dx = 0, uint dy = 0, uint cButtons = 0, uint dwExtraInfo = 0);
 
 
 	}
 
-
-	public enum MouseEvents
+	public enum MouseEvent
 	{
 		NONE = 0x00,
 		MOUSEEVENTF_LEFTDOWN = 0x02,
