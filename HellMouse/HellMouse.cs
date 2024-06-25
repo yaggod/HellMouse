@@ -6,6 +6,7 @@
 		public int MaxDelay { get; private set; }
 
 		private Thread _executionThread;
+		private ManualResetEvent _resetEvent = new(true);
 
 
 		public HellMouse(int minDelay, int maxDelay)
@@ -17,11 +18,20 @@
 
 		public void Begin()
 		{
+			if (_executionThread.ThreadState == ThreadState.Running)
+				throw new InvalidOperationException("Thread is already running");
 			_executionThread.Start();
+			
 		}
 
-		public void Stop()
+		public void Pause()
 		{
+			_resetEvent.Reset();
+		}
+		
+		public void Resume()
+		{
+			_resetEvent.Set();
 		}
 
 		private void Workflow()
@@ -31,8 +41,9 @@
 			{
 				try
 				{
-					PerformAction();
-					Task.Delay(random.Next(MinDelay, MaxDelay)).Wait();
+					_resetEvent.WaitOne();
+                    PerformAction();
+                    Task.Delay(random.Next(MinDelay, MaxDelay)).Wait();
 				}
 				catch
 				{
